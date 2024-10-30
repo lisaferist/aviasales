@@ -1,0 +1,10 @@
+.tickets-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 506px;
+
+  @media (width < 520px) {
+    width: 400px;
+  }
+}

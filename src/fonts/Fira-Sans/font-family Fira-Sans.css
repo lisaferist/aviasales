@@ -1,0 +1,24 @@
+@font-face {
+    font-family: "FiraSans-Light";
+    src:    local('FiraSans-Light'),
+    local('Fira-Sans-Light'),
+    local('FiraSans Light'),
+    local('FiraSansLight'),
+    url("FiraSans-Light.ttf") format("truetype");
+}
+@font-face {
+    font-family: "FiraSans-Medium";
+    src:    local('FiraSans-Medium'),
+    local('FiraSans Medium'),
+    local('Fira-Sans-Medium'),
+    local('FiraSansMedium'),
+    url("FiraSans-Medium.ttf") format("truetype")
+}
+@font-face {
+    font-family: "FiraSans-Regular";
+    src:    local('FiraSans-Regular'),
+    local('FiraSans Regular'),
+    local('Fira-Sans-Regular'),
+    local('FiraSansRegular'),
+    url("FiraSans-Regular.ttf") format("truetype")
+}

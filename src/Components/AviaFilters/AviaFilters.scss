@@ -1,0 +1,79 @@
+@import "../../style";
+
+.avia-filters {
+  width: 230px;
+  height: 250px;
+  padding: 20px 0 0 0;
+
+  border: 1px solid $shadow-gray;
+  border-radius: 7px;
+  background-color: white;
+  box-shadow: 0 0 10px 0 $shadow-gray;
+
+  .avia-filters__title {
+    font-size: 12px;
+    margin-top: 0;
+    padding: 0 20px;
+  }
+  .avia-filters__filters-list {
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+
+    .avia-filters__filter {
+      height: 38px;
+      display: block;
+      padding: 0 0 0 20px;
+
+      .avia-filters__checkbox-label {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        border: 1px solid $text-gray;
+        border-radius: 2px;
+        margin: 10px 10px 0 0;
+      }
+
+      .avia-filters__checkbox-label--checked {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        border: 1px solid $blue;
+        border-radius: 2px;
+        margin: 10px 10px 0 0;
+        background: no-repeat url("checkmark.svg") center;
+        background-size: 75%;
+      }
+
+      .avia-filters__checkbox {
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+        margin: 0;
+      }
+
+      .avia-filters__text {
+        position: relative;
+        top: -4px;
+      }
+    }
+    .avia-filters__filter:hover {
+      background-color: $background-blue;
+    }
+    @media (width < 775px) {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    @media (width < 520px) {
+      width: 400px;
+    }
+  }
+  @media (width < 775px) {
+    width: 500px;
+    height: 130px;
+  }
+  @media (width < 520px) {
+    width: 400px;
+  }
+}
