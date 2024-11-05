@@ -33,11 +33,26 @@ body {
     color: $blue;
     width: 60px;
     height: 60px;
-    padding-left: 7px;
 
     box-shadow: 0 0 10px 0 $shadow-gray;
     border-radius: 50%;
   }
+
+  .more-button {
+    height: 50px;
+    width: 506px;
+
+    color: white;
+    background-color: $blue;
+    border-radius: 7px;
+    border: none;
+    
+    margin-top: 20px;
+  }
+  .more-button--inactive {
+    background-color: $shadow-gray;
+  }
+
   @media (width < 775px) {
     width: 520px;
     display: flex;
@@ -51,5 +66,8 @@ body {
     .avia_icon {
       margin-left: 170px;
     }
+    .more-button {
+      width: 400px;
+     }
   }
 }

@@ -8,11 +8,12 @@ const aviaFiltersSlice = createSlice({
     activeAviaFilter: [],
     aviaFilters: [
       { id: 'all', text: 'Все', isActive: false },
-      { id: '0tr', text: 'Без пересадок', isActive: false },
-      { id: '1tr', text: '1 пересадка', isActive: false },
-      { id: '2tr', text: '2 пересадки', isActive: false },
-      { id: '3tr', text: '3 пересадки', isActive: false },
+      { id: '0', text: 'Без пересадок', isActive: false },
+      { id: '1', text: '1 пересадка', isActive: false },
+      { id: '2', text: '2 пересадки', isActive: false },
+      { id: '3', text: '3 пересадки', isActive: false },
     ],
+    activeFiltersTab: 'cheap',
   },
   reducers: {
     checkboxChanged(state, action) {
@@ -57,8 +58,13 @@ const aviaFiltersSlice = createSlice({
         })
         .filter((filter) => filter !== null)
     },
+    filterTabsChanged(state, action) {
+      if (state.activeFiltersTab !== action.payload.tabId) {
+        state.activeFiltersTab = action.payload.tabId
+      }
+    },
   },
 })
 
-export const { checkboxChanged } = aviaFiltersSlice.actions
+export const { checkboxChanged, filterTabsChanged } = aviaFiltersSlice.actions
 export default aviaFiltersSlice.reducer

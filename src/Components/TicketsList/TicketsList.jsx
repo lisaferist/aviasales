@@ -7,13 +7,17 @@ import { Spin } from 'antd'
 import Ticket from '../Ticket'
 import { fetchTickets } from '../../store/getTicketsSlice'
 
-function TicketsList() {
+function TicketsList({ numberOfTicketsDisplayed }) {
+  const errorStatus = useSelector((state) => state.getTickets.error)
+  if (errorStatus) {
+    console.log('AAAAAAAAAAAAAAAAA')
+  }
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchTickets())
   }, [dispatch])
 
-  const ticketsArray = useSelector((state) => state.getTickets.tickets)
+  const ticketsArray = useSelector((state) => state.getTickets.tickets.slice(0, numberOfTicketsDisplayed))
   const status = useSelector((state) => state.getTickets.status)
   const tickets = ticketsArray.map((ticketObj) => <Ticket ticketObj={ticketObj} key={ticketObj.id} />)
   const content = status === 'resolved' ? tickets : <Spin size="large" />

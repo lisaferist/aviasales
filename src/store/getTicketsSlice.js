@@ -2,16 +2,28 @@
 // отключаю правило тк использую redux toolkit
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-export const fetchTickets = createAsyncThunk('getTickets/fetchTickets', async () => {
-  const searchIdResponse = await fetch('https://aviasales-test-api.kata.academy/search')
-  const searchIdObj = await searchIdResponse.json()
-  const { searchId } = searchIdObj
-  const response = await fetch(`https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`)
-  if (!response.ok && response.status !== 500) {
-    throw new Error(`ошибка в fetch запросе, статус ${response.status}`)
+import getSearchId from '../Components/aviasalesApi/getSearchId'
+import getPackOfTickets from '../Components/aviasalesApi/getPackOfTickets'
+
+export const fetchTickets = createAsyncThunk('getTickets/fetchTickets', async (arg, thunkObj) => {
+  const state = thunkObj.getState()
+  if (state.getTickets.status === 'stop') {
+    throw new Error('все билеты уже получены')
   }
-  const data = await response.json()
-  return data
+  const { dispatch } = thunkObj
+  let searchId
+  if (!state.getTickets.searchId) {
+    searchId = await getSearchId()
+  } else searchId = state.getTickets.searchId
+  let data
+  try {
+    data = await getPackOfTickets(searchId)
+  } catch (e) {
+    if (e.message === '500 status') {
+      dispatch(fetchTickets())
+    } else throw e
+  }
+  return { ...data, searchId }
 })
 
 // const sortTickets = (ticketsArray) => {
@@ -38,11 +50,20 @@ export const fetchTickets = createAsyncThunk('getTickets/fetchTickets', async ()
 const getTicketsSlice = createSlice({
   name: 'getTickets',
   initialState: {
+    searchId: null,
     tickets: [],
     status: null,
     error: null,
+    ticketPackNumber: 0,
+    numberOfTicketsDisplayed: 5,
   },
-  reducers: {},
+  reducers: {
+    increaseNumberOfTicketsDisplayed(state, action) {
+      if (state.tickets.length - state.numberOfTicketsDisplayed >= 5) {
+        state.numberOfTicketsDisplayed += action.payload.addedNumber
+      } else state.numberOfTicketsDisplayed = state.tickets.length
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTickets.pending, (state) => {
@@ -52,17 +73,31 @@ const getTicketsSlice = createSlice({
         state.error = null
       })
       .addCase(fetchTickets.fulfilled, (state, action) => {
+        state.ticketPackNumber++
+        let tickets
+        if (action.payload.tickets) {
+          tickets = action.payload.tickets.map((ticket, index) => ({
+            id: `${state.ticketPackNumber}${index}`,
+            ...ticket,
+          }))
+        } else tickets = []
+        if (!state.searchId) {
+          state.searchId = action.payload.searchId
+        }
         if (state.status !== 'resolved') {
           state.status = 'resolved'
-          state.tickets = action.payload.tickets
+          state.tickets = tickets
         } else {
-          state.tickets = [...state.tickets, ...action.payload.tickets]
+          state.tickets = [...state.tickets, ...tickets]
+        }
+        if (action.payload.stop) {
+          state.status = 'stop'
         }
       })
       .addCase(fetchTickets.rejected, (state) => {
         state.error = true
-        state.status = 'error'
       })
   },
 })
+export const { increaseNumberOfTicketsDisplayed } = getTicketsSlice.actions
 export default getTicketsSlice.reducer
