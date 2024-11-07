@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import aviaFiltersReducer from './aviaFiltersSlice'
-import getTicketsSlice from './getTicketsSlice'
+import TicketsSlice from './TicketsSlice'
 
 const appStore = configureStore({
   reducer: {
     aviaFilters: aviaFiltersReducer,
-    getTickets: getTicketsSlice,
+    Tickets: TicketsSlice,
   },
 })
 export default appStore

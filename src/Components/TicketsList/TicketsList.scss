@@ -1,8 +1,24 @@
+@import "../../style.scss";
 .tickets-list {
   list-style: none;
   margin: 0;
   padding: 0;
   width: 506px;
+
+  .tickets-list__warning {
+    margin-top: 15px;
+    height: 75px;
+    padding: 15px;
+
+    background-color: white;
+    border: 1px solid $shadow-gray;
+    border-radius: 7px;
+    box-shadow: 0 0 10px 0 $shadow-gray;
+
+    color: $black;
+    font-size: 16px;
+    font-family: FiraSans-Medium, sans-serif;
+  }
 
   @media (width < 520px) {
     width: 400px;

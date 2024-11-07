@@ -1,13 +1,15 @@
 import './AviaFilters.scss'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { checkboxChanged } from '../../store/aviaFiltersSlice'
+import { filterTickets } from '../../store/TicketsSlice'
 
 function AviaFilters() {
   const dispatch = useDispatch()
   const filtersArray = useSelector((state) => state.aviaFilters.aviaFilters)
+  const activeFilters = useSelector((state) => state.aviaFilters.activeAviaFilter)
   const checkboxLabelOnclick = (e) => {
     if (e.target.className === 'avia-filters__checkbox-label') {
       e.target.className = 'avia-filters__checkbox-label--checked'
@@ -18,6 +20,9 @@ function AviaFilters() {
   const checkboxOnchange = (e) => {
     dispatch(checkboxChanged({ filterId: e.target.id }))
   }
+  useEffect(() => {
+    dispatch(filterTickets({ filters: activeFilters }))
+  }, [activeFilters, dispatch])
   const aviaFilters = filtersArray.map((filter) => (
     <li className="avia-filters__filter" key={filter.id}>
       <label

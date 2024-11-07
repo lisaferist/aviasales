@@ -5,23 +5,48 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Spin } from 'antd'
 
 import Ticket from '../Ticket'
-import { fetchTickets } from '../../store/getTicketsSlice'
+import { fetchTickets, sortTickets } from '../../store/TicketsSlice'
+import ErrorBlock from '../ErrorBlock'
 
-function TicketsList({ numberOfTicketsDisplayed }) {
-  const errorStatus = useSelector((state) => state.getTickets.error)
-  if (errorStatus) {
-    console.log('AAAAAAAAAAAAAAAAA')
-  }
+function TicketsList() {
   const dispatch = useDispatch()
+
   useEffect(() => {
     dispatch(fetchTickets())
   }, [dispatch])
 
-  const ticketsArray = useSelector((state) => state.getTickets.tickets.slice(0, numberOfTicketsDisplayed))
-  const status = useSelector((state) => state.getTickets.status)
-  const tickets = ticketsArray.map((ticketObj) => <Ticket ticketObj={ticketObj} key={ticketObj.id} />)
-  const content = status === 'resolved' ? tickets : <Spin size="large" />
-  return <ul className="tickets-list">{content}</ul>
+  const numberOfTicketsDisplayed = useSelector((state) => state.Tickets.numberOfTicketsDisplayed)
+  const activeFilters = useSelector((state) => state.aviaFilters.activeAviaFilter)
+  const errorStatus = useSelector((state) => state.Tickets.error)
+  const activeFilterTab = useSelector((state) => state.aviaFilters.activeFiltersTab)
+  const status = useSelector((state) => state.Tickets.status)
+  const ticketsArray = useSelector((state) => state.Tickets.displayedTickets)
+
+  useEffect(() => {
+    dispatch(sortTickets({ filterTab: activeFilterTab }))
+  }, [activeFilterTab, dispatch, status, ticketsArray])
+
+  const tickets = ticketsArray
+    .slice(0, numberOfTicketsDisplayed)
+    .map((ticketObj) => <Ticket ticketObj={ticketObj} key={ticketObj.id} />)
+  const content = tickets || <Spin size="large" />
+  const errorBlock = errorStatus ? <ErrorBlock /> : null
+
+  if (activeFilters.length === 0 || tickets.length === 0) {
+    return (
+      <ul className="tickets-list">
+        <div className="tickets-list__warning">
+          Не найдено билетов для выбранных фильтров. Пожалйста, выберите фильтры
+        </div>
+      </ul>
+    )
+  }
+
+  return (
+    <ul className="tickets-list">
+      {content} {errorBlock}
+    </ul>
+  )
 }
 
 export default TicketsList

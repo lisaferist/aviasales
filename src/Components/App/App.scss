@@ -48,9 +48,19 @@ body {
     border: none;
     
     margin-top: 20px;
+
+    transition-duration: 0.2s;
   }
   .more-button--inactive {
     background-color: $shadow-gray;
+  }
+  .more-button:hover {
+    background-color: $hover-blue;
+    transform: scale(1.007);
+  }
+  .more-button--inactive:hover {
+    background-color: $shadow-gray;
+    transform: none;
   }
 
   @media (width < 775px) {

@@ -12,9 +12,18 @@
     border: 1px solid $shadow-gray;
     color: $black;
 
+    transition-duration: 0.2s;
+
     @media (width < 520px) {
       width: 200px;
     }
+  }
+  .filter-tabs__tab:hover {
+    background-color: $background-blue;
+    transform: scale(1.007);
+  }
+  .filter-tabs__tab--active:hover {
+    background-color: $hover-blue
   }
   :last-child {
     border-top-right-radius: 7px;

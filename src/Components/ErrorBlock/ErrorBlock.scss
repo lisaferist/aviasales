@@ -1,0 +1,37 @@
+@import "../../style.scss";
+
+.error-block {
+  margin-top: 15px;
+  height: 140px;
+  padding: 15px;
+
+  background-color: $background-pink;
+  border: 2px solid $border-red;
+  border-radius: 7px;
+  box-shadow: 0 0 10px 0 $border-red;
+
+  color: $border-red;
+  font-size: 16px;
+  font-family: FiraSans-Medium, sans-serif;
+
+  .error-block__text {
+    margin: 0 0 15px 0;
+  }
+  .error-block__try-again-button {
+    font-family: inherit;
+    font-size: inherit;
+
+    border: $border-red 2px solid;
+    border-radius: 5px;
+    background-color: $background-red;
+    color: $border-red;
+
+    height: 35px;
+    width: 476px;
+
+    transition-duration: 0.2s;
+  }
+  .error-block__try-again-button:hover {
+    transform: scale(1.01);
+  }
+}

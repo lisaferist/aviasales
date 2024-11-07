@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import AviaFilters from '../AviaFilters'
 import FilterTabs from '../FilterTabs'
 import TicketsList from '../TicketsList'
-import { fetchTickets, increaseNumberOfTicketsDisplayed } from '../../store/getTicketsSlice'
+import { fetchTickets, increaseNumberOfTicketsDisplayed } from '../../store/TicketsSlice'
 
 function App() {
   const dispatch = useDispatch()
-  const stateStatus = useSelector((state) => state.getTickets.status)
-  const numberOfTicketsDisplayed = useSelector((state) => state.getTickets.numberOfTicketsDisplayed)
-  const ticketsCount = useSelector((state) => state.getTickets.tickets.length)
+  const stateStatus = useSelector((state) => state.Tickets.status)
+  const numberOfTicketsDisplayed = useSelector((state) => state.Tickets.numberOfTicketsDisplayed)
+  const ticketsCount = useSelector((state) => state.Tickets.displayedTickets.length)
   const moreButtonOnclick = (e) => {
     if (stateStatus !== 'stop') {
       dispatch(fetchTickets())
