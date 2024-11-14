@@ -10,6 +10,8 @@ function AviaFilters() {
   const dispatch = useDispatch()
   const filtersArray = useSelector((state) => state.aviaFilters.aviaFilters)
   const activeFilters = useSelector((state) => state.aviaFilters.activeAviaFilter)
+  const status = useSelector((state) => state.Tickets.status)
+  const allTickets = useSelector((state) => state.Tickets.allTickets)
   const checkboxLabelOnclick = (e) => {
     if (e.target.className === 'avia-filters__checkbox-label') {
       e.target.className = 'avia-filters__checkbox-label--checked'
@@ -22,7 +24,7 @@ function AviaFilters() {
   }
   useEffect(() => {
     dispatch(filterTickets({ filters: activeFilters }))
-  }, [activeFilters, dispatch])
+  }, [activeFilters, dispatch, status, allTickets])
   const aviaFilters = filtersArray.map((filter) => (
     <li className="avia-filters__filter" key={filter.id}>
       <label

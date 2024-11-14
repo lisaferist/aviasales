@@ -5,13 +5,13 @@ import { createSlice } from '@reduxjs/toolkit'
 const aviaFiltersSlice = createSlice({
   name: 'aviaFilters',
   initialState: {
-    activeAviaFilter: [],
+    activeAviaFilter: ['all', '0', '1', '2', '3'],
     aviaFilters: [
-      { id: 'all', text: 'Все', isActive: false },
-      { id: '0', text: 'Без пересадок', isActive: false },
-      { id: '1', text: '1 пересадка', isActive: false },
-      { id: '2', text: '2 пересадки', isActive: false },
-      { id: '3', text: '3 пересадки', isActive: false },
+      { id: 'all', text: 'Все', isActive: true },
+      { id: '0', text: 'Без пересадок', isActive: true },
+      { id: '1', text: '1 пересадка', isActive: true },
+      { id: '2', text: '2 пересадки', isActive: true },
+      { id: '3', text: '3 пересадки', isActive: true },
     ],
     activeFiltersTab: 'cheap',
   },

@@ -30,6 +30,8 @@
     grid-column-end: 4;
   }
   .ticket__text-block {
+    list-style: none;
+    padding: 0;
     .ticket__primary-info {
       margin-bottom: 0;
       margin-top: 5px;

@@ -30,6 +30,7 @@ export const fetchTickets = createAsyncThunk('getTickets/fetchTickets', async (a
 const TicketsSlice = createSlice({
   name: 'getTickets',
   initialState: {
+    gettingInterval: null,
     searchId: null,
     allTickets: [],
     displayedTickets: [],
@@ -40,6 +41,11 @@ const TicketsSlice = createSlice({
     numberOfTicketsDisplayed: 5,
   },
   reducers: {
+    setGettingInterval(state, action) {
+      if (!state.gettingInterval) {
+        state.gettingInterval = action.payload.interval
+      }
+    },
     increaseNumberOfTicketsDisplayed(state, action) {
       if (state.displayedTickets.length - state.numberOfTicketsDisplayed >= 5) {
         state.numberOfTicketsDisplayed += action.payload.addedNumber
@@ -107,6 +113,7 @@ const TicketsSlice = createSlice({
         }
         if (action.payload.stop) {
           state.status = 'stop'
+          clearInterval(state.gettingInterval)
         }
       })
       .addCase(fetchTickets.rejected, (state, action) => {
@@ -117,5 +124,5 @@ const TicketsSlice = createSlice({
       })
   },
 })
-export const { increaseNumberOfTicketsDisplayed, sortTickets, filterTickets } = TicketsSlice.actions
+export const { increaseNumberOfTicketsDisplayed, sortTickets, filterTickets, setGettingInterval } = TicketsSlice.actions
 export default TicketsSlice.reducer

@@ -5,6 +5,13 @@
   padding: 0;
   width: 506px;
 
+  .tickets-list__spin-wrapper {
+    margin: 50px;
+    display: flex;
+    justify-content: center;
+    transform: scale(1.5);
+  }
+
   .tickets-list__warning {
     margin-top: 15px;
     height: 75px;

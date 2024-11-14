@@ -4,13 +4,11 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { filterTabsChanged } from '../../store/aviaFiltersSlice'
-import { fetchTickets } from '../../store/TicketsSlice'
 
 function FilterTabs() {
   const dispatch = useDispatch()
   const activeTabId = useSelector((state) => state.aviaFilters.activeFiltersTab)
   const filterTabOnclick = (e) => {
-    dispatch(fetchTickets())
     dispatch(filterTabsChanged({ tabId: e.target.id }))
   }
   return (
